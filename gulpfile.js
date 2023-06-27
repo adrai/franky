@@ -17,7 +17,8 @@ import size from 'gulp-size'
 import bs from 'browser-sync'
 
 const browserSync = bs.create()
-const reload = browserSync.reload
+
+const distDir = 'docs'
 
 // Tasks
 // -------------------------------------------------------------------
@@ -25,9 +26,14 @@ const reload = browserSync.reload
 function browser() {
     browserSync.init({
         server: {
-            baseDir: "dist"
+            baseDir: distDir
         }
     });
+}
+
+function reload(done) {
+    browserSync.reload();
+    done();
 }
 
 // Notify on error with a beep
@@ -59,7 +65,7 @@ function html() {
             minifyCSS: true
         }))
         // Where to store the finalized HTML
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest(distDir));
 }
 
 // CSS task
@@ -80,7 +86,7 @@ function css() {
         // Show sizes of minified CSS files
         .pipe(size({ showFiles: true }))
         // Where to store the finalized CSS
-        .pipe(gulp.dest("dist/css"));
+        .pipe(gulp.dest(`${distDir}/css`));
 }
 
 // JS task
@@ -91,19 +97,19 @@ function js() {
         // Concatenate all JS files into one
         .pipe(concat("production.js"))
         // Where to store the finalized JS
-        .pipe(gulp.dest("dist/js"));
+        .pipe(gulp.dest(`${distDir}/js`));
 }
 
 function jsVendors() {
     return gulp.src("src/js/vendor/**/*")
         // Where to store the finalized JS
-        .pipe(gulp.dest("dist/js/vendor"));
+        .pipe(gulp.dest(`${distDir}/js/vendor`));
 }
 
 function favicon() {
     return gulp.src("src/img/favicon/**/*")
         // Where to store the finalized JS
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest(distDir));
 }
 
 // Image task
@@ -114,7 +120,7 @@ function images() {
         // Minify the images
         .pipe(imagemin())
         // Where to store the finalized images
-        .pipe(gulp.dest("dist/img"));
+        .pipe(gulp.dest(`${distDir}/img`));
 }
 
 function watchAndBuild () {
@@ -123,7 +129,7 @@ function watchAndBuild () {
         "src/scss/**/*",
         "src/js/**/*",
         "src/img/**/*.+(png|jpeg|jpg|gif|svg)"
-    ], build);
+    ], gulp.series([build, reload]));
 }
 
 export const build = gulp.parallel([
