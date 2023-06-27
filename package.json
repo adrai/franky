@@ -1,0 +1,31 @@
+{
+  "name": "pear-gulp",
+  "version": "1.0.0",
+  "author": "Jordan Bowman",
+  "description": "This is a Gulp boilerplate that is part of the Pear HTML/Sass boilerplate",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-file-include": "^2.3.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-imagemin": "^8.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-size": "^4.0.1",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^5.0.1"
+  },
+  "dependencies": {
+    "sass": "1.63.6"
+  }
+}
